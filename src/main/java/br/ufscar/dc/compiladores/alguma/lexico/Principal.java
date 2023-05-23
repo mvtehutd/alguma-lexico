@@ -22,16 +22,20 @@ public class Principal {
                 System.err.println("O arquivo/diretório não existe:" + args[1]);
             }
 
-            MyCustomErrorListener mcel = new MyCustomErrorListener();
-            lex.addErrorListener(mcel);
-
             Token t = null;
             // Cria um objeto para escrever no arquivo
             try (PrintWriter pw = new PrintWriter(arquivoSaida)) {
                 while ((t = lex.nextToken()).getType() != Token.EOF) {
-                    if (AlgumaLexer.VOCABULARY.getDisplayName(t.getType()).equals("IDENT") |
-                    AlgumaLexer.VOCABULARY.getDisplayName(t.getType()).equals("CADEIA")) {
-                        pw.println("<'" + t.getText() + "'," + (String) AlgumaLexer.VOCABULARY.getDisplayName(t.getType()) + ">");
+                    String nomeToken = (String) AlgumaLexer.VOCABULARY.getDisplayName(t.getType());
+                    if (nomeToken.equals("ERRO")) {
+                        pw.println("Linha " + t.getLine() + ": " + t.getText() + " - simbolo nao identificado");
+                        break;
+                    } else if (nomeToken.equals("CADEIA_NAO_FECHADA")) {
+                        pw.println("Cadeia não fechada na linha " + t.getLine());
+                        break;
+                    } else if (nomeToken.equals("IDENT") | nomeToken.equals("CADEIA") |
+                            nomeToken.equals("NUM_INT") | nomeToken.equals("NUM_REAL")) {
+                        pw.println("<'" + t.getText() + "'," + nomeToken + ">");
                     } else {
                         pw.println("<'" + t.getText() + "','" + t.getText() + "'>");
                     }
