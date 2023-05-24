@@ -30,6 +30,9 @@ public class Principal {
                     if (nomeToken.equals("ERRO")) {
                         pw.println("Linha " + t.getLine() + ": " + t.getText() + " - simbolo nao identificado");
                         break;
+                    } else if( nomeToken.equals("COMENTARIO_NAO_FECHADO")) { 
+                        pw.println("Linha " + t.getLine() + ": " + "comentario nao fechado");
+                        break;
                     } else if (nomeToken.equals("CADEIA_NAO_FECHADA")) {
                         pw.println("Cadeia não fechada na linha " + t.getLine());
                         break;
