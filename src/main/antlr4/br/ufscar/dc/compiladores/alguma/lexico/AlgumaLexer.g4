@@ -41,3 +41,4 @@ CADEIA_NAO_FECHADA: '"' ~('\n'|'\r'|'"')* '\n';
 COMENTARIO_NAO_FECHADO: '{' ~('\n'|'\r'|'{'|'}')* '\n' ;
 
 ERRO: .;
+
